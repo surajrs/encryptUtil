@@ -9,7 +9,7 @@ cat test/encryptUtil |./encryptUtil -n 5 -k keyfileplain >test/encryptUtil_encod
 echo "comparing the original and encoded"
 diff encryptUtil test/encryptUtil_encoded
 #decode back
-cat test/encryptUtil_encoded |./encryptUtil -n 5 -k keyfileplain >test/encryptUtil_decoded
+cat test/encryptUtil_encoded |./encryptUtil -n 15 -k keyfileplain >test/encryptUtil_decoded
 
 # diff with the original
 echo "comparing the final decoded file with original file"

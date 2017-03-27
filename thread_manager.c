@@ -89,6 +89,7 @@ void delete_worker() {
         exit(1);
     }
     pthread_join( g_writer_thread.id, NULL);
+    msgctl(encode_msg_id, IPC_RMID, NULL);
 }
 
 /* Called by reader to identify a thread and assign work to the thread that is free */

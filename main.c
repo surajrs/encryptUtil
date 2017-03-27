@@ -2,19 +2,20 @@
 
 void help() {
 
-    printf("encryptUtil [-n #] [-k keyfile]\n-n # Number of threads to create\n-k keyfile Path to file containing key\n");
+    fprintf(stderr, "encryptUtil [-n #] [-k keyfile]\n-n # Number of threads to create\n-k keyfile Path to file containing key\n");
 }
 int main(int argc, char **argv) {
     INT8 c;
     UCHAR key[MAX_KEY_SIZE];
-    UINT32 key_len = 2;
-    UINT32 num_thread = 1;
+    UINT32 key_len = 0;
+    UINT32 num_thread = 0;
     FILE *fp = NULL;
 
     if(argc < 3) {
         help();
         return 1;
     }
+    /* Parse command line paramters */
     while ((c = getopt (argc, argv, "n:k:")) != -1) {
         switch(c) {
             case 'n':
@@ -56,6 +57,12 @@ int main(int argc, char **argv) {
                 help();
                 abort();
         }
+    }
+
+    /* Check parameter validity */
+    if(num_thread == 0 || key_len == 0) {
+        help();
+        return 1;
     }
 
     init_encrypt_util(num_thread);
