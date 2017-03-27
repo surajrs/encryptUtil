@@ -33,16 +33,15 @@ UINT32 suggested_buf_size(UINT32 key_len) {
 #endif
 }
 
-
+/* Reads data from stdin and process it */
 void process_encrypt_util(UCHAR *key, UINT32 key_len) {
     UCHAR *ptr;
     UCHAR *key_blob;
     UINT32 len;
     UINT32 str_len, frag_len;
-    UINT32 frag_index = 0;
     UCHAR * buffer;
     UINT32 read_size = suggested_buf_size(key_len);
-    UINT32 i;
+
     do {
            buffer = malloc(read_size);
            if(buffer == NULL) {
@@ -59,7 +58,6 @@ void process_encrypt_util(UCHAR *key, UINT32 key_len) {
                } 
                generate_key_blob(key_blob, len, key, key_len); 
                update_key_worker(buffer, len,key_blob);
-               frag_index++;
            }else {
                free(buffer);
            } 
@@ -83,6 +81,7 @@ void shift_stream(UCHAR * str, UINT32 size) {
 
         str[0] |= ovf;
 }
+
 /* This function creates a key blob from the key by continouosly doing a left shift and copy
    Until it reach buf_len.
    The size of buf_len will be a multiple of key_len only except for the last buffer in the input file.
@@ -111,7 +110,7 @@ UINT32 generate_key_blob(UCHAR *buf, UINT32 buf_len, UCHAR *key, UINT32 key_len)
 /* Do an XOR transform of the buf using key */
 void xor_trans_buffer(UCHAR *buf, UINT32 buff_len, UCHAR *key, UINT32 key_len) {
     UINT32 i = 0,j = 0;
-    /* This function encodes only the first key length bytest of the input stream */
+
     while(i < key_len && j < buff_len) {
         buf[j++] ^= key[i++];
     }

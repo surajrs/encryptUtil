@@ -21,27 +21,36 @@
 #define THREAD_BUSY   2
 #define THREAD_EXIT   3
 
+/* Structure storing the user provided buffer and key */
 typedef struct usr_data {
     UCHAR *data;
     UCHAR *key;
     UINT32 len;
     UINT32 status;
 } usr_data;
-typedef struct enc_data {
+
+/* Message structure sent between threads */
+typedef struct enc_message {
     long type;
     UINT32 id;
     usr_data *buf;
     UCHAR e_status;
-} enc_data;
+} enc_message;
 
+/* Thread context, keeping track of thread related data */
 typedef struct thread_ctxt {
     pthread_t id;
     INT msg_type;
     UCHAR state;
 }thread_ctxt;
 
+/* Create all worker threads and initialize the message queue */
 void create_worker(UINT32 num_thread);
+
+/* Clean up and exit all threads */
 void delete_worker();
+
+/* Update data to the first available thread for process and add add it to queue to keep track of the data order */
 void update_key_worker(UCHAR *frag, UINT32 frag_len, UCHAR *key);
 
 #endif //_THEREAD_MANAGER

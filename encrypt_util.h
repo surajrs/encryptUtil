@@ -20,6 +20,10 @@
 
 //#define DEBUG 
 
+/* Uncommenting the flag would let the utility process the buffer key length at a time.
+   The default implemenation reads a large buffer and process each buffer together after
+   automatically creating a key buffer whose size is equal to the buffer size.
+*/
 //#define PROCESS_SINGLE_KEY
 
 #endif //_ENCRYPT_UTIL

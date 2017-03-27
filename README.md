@@ -8,6 +8,7 @@ Testing
 cat <input file> |./encryptUtil -n #threads -k <keyfile> ><output file>
 
 I have tested the below scenarios.
+
 1.Basic test input/out put validation as provided in the problem.
 3. input Limit check: Tested input with invalud file and invalid thread count
 2. Basic command line input + ve and -ve test cases by omitting command line parameters.
